@@ -1,1 +1,280 @@
-j
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07110d">
+<title>Asma-ul-Husna | 99 Names of Allah</title>
+<style>
+:root{--bg:#07110d;--panel:#102019;--gold:#e7c56b;--text:#f5f2e8;--muted:#b8c4bb;--line:#294437}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#153b29,var(--bg) 65%);color:var(--text);font-family:system-ui,sans-serif;min-height:100vh}
+header{text-align:center;padding:30px 12px 22px;border-bottom:1px solid var(--line)}
+.logo{font-size:12px;letter-spacing:3px;color:var(--gold)}
+.crescent{font-size:34px;color:var(--gold);margin:10px}
+h1{font-family:Georgia,serif;font-size:clamp(30px,8vw,46px);margin:5px;color:var(--gold)}
+.sub{color:var(--muted);line-height:1.7}
+.wrap{max-width:1100px;margin:auto;padding:18px 14px 40px}
+.stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.stat{background:var(--panel);border:1px solid var(--line);padding:10px 16px;border-radius:12px;text-align:center;color:var(--muted);font-size:12px}
+.stat b{display:block;color:var(--gold);font-size:19px}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0 12px}
+.search{flex:1;min-width:170px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px;color:var(--text);font-size:16px}
+.btn{background:#14251c;color:var(--text);border:1px solid var(--line);padding:11px 13px;border-radius:11px;font-size:14px;cursor:pointer}
+.btn.active{background:#145c3c;border-color:var(--gold)}
+.hint{color:var(--muted);font-size:12px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:13px}
+.card{background:linear-gradient(145deg,#14251c,#0c1711);border:1px solid var(--line);border-radius:16px;padding:16px;min-height:190px}
+.number{font-size:12px;color:var(--gold);letter-spacing:1px}
+.arabic{font-family:"Noto Naskh Arabic","Amiri",serif;font-size:35px;text-align:center;color:var(--gold);margin:16px 0;direction:rtl}
+.translit{text-align:center;font-weight:bold;font-size:17px}
+.meaning{text-align:center;color:var(--muted);font-size:14px;min-height:38px;line-height:1.5;margin-top:7px}
+.actions{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.small{padding:8px 10px;font-size:13px}
+.empty{text-align:center;padding:35px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12px;line-height:1.8;padding:22px;border-top:1px solid var(--line)}
+footer strong{color:var(--gold)}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">A JOURNEY OF REMEMBRANCE</div>
+<div class="crescent">☾</div>
+<h1>Asma-ul-Husna</h1>
+<p class="sub">The 99 Beautiful Names of Allah<br>Learn, reflect, and remember.</p>
+</header>
+
+<main class="wrap">
+<div class="stats">
+<div class="stat"><b>99</b>Beautiful Names</div>
+<div class="stat"><b id="shown">99</b>Shown</div>
+<div class="stat"><b id="favCount">0</b>Favorites</div>
+</div>
+<div class="controls">
+<input class="search" id="search" type="search" placeholder="Search names or meanings..." aria-label="Search names">
+<button class="btn active" id="allBtn">All Names</button>
+<button class="btn" id="favBtn">♥ Favorites</button>
+</div>
+<p class="hint">Search by Arabic name, transliteration, English meaning, or number. Tap Listen to try your phone's Arabic speech voice.</p>
+<section class="grid" id="names" aria-live="polite"></section>
+</main>
+
+<footer>
+Made with care for learning and remembrance.<br>
+<strong>English meanings and transliterations are brief interpretations.</strong><br>
+Spellings and translations can vary. Consult a trusted Islamic reference for religious study.
+</footer>
+
+<script>
+const data = `
+الرَّحْمَٰن|Ar-Rahman|The Most Compassionate
+الرَّحِيم|Ar-Raheem|The Most Merciful
+الْمَلِك|Al-Malik|The King and Sovereign
+الْقُدُّوس|Al-Quddus|The Most Holy
+السَّلَام|As-Salam|The Source of Peace
+الْمُؤْمِن|Al-Mu'min|The Giver of Faith and Security
+الْمُهَيْمِن|Al-Muhaymin|The Guardian
+الْعَزِيز|Al-Aziz|The Almighty
+الْجَبَّار|Al-Jabbar|The Compeller and Restorer
+الْمُتَكَبِّر|Al-Mutakabbir|The Supremely Great
+الْخَالِق|Al-Khaliq|The Creator
+الْبَارِئ|Al-Bari|The Originator
+الْمُصَوِّر|Al-Musawwir|The Fashioner
+الْغَفَّار|Al-Ghaffar|The Constant Forgiver
+الْقَهَّار|Al-Qahhar|The All-Prevailing
+الْوَهَّاب|Al-Wahhab|The Bestower
+الرَّزَّاق|Ar-Razzaq|The Provider
+الْفَتَّاح|Al-Fattah|The Opener
+الْعَلِيم|Al-Alim|The All-Knowing
+الْقَابِض|Al-Qabid|The Withholder
+الْبَاسِط|Al-Basit|The Expander
+الْخَافِض|Al-Khafid|The One Who Lowers
+الرَّافِع|Ar-Rafi|The One Who Raises
+الْمُعِزّ|Al-Mu'izz|The Giver of Honor
+الْمُذِلّ|Al-Mudhill|The One Who Humbles
+السَّمِيع|As-Sami|The All-Hearing
+الْبَصِير|Al-Basir|The All-Seeing
+الْحَكَم|Al-Hakam|The Judge
+الْعَدْل|Al-Adl|The Utterly Just
+اللَّطِيف|Al-Latif|The Most Subtle and Kind
+الْخَبِير|Al-Khabir|The All-Aware
+الْحَلِيم|Al-Halim|The Most Forbearing
+الْعَظِيم|Al-Azim|The Magnificent
+الْغَفُور|Al-Ghafur|The Great Forgiver
+الشَّكُور|Ash-Shakur|The Most Appreciative
+الْعَلِيّ|Al-Aliyy|The Most High
+الْكَبِير|Al-Kabir|The Most Great
+الْحَفِيظ|Al-Hafiz|The Preserver
+الْمُقِيت|Al-Muqit|The Sustainer
+الْحَسِيب|Al-Hasib|The Reckoner
+الْجَلِيل|Al-Jalil|The Majestic
+الْكَرِيم|Al-Karim|The Most Generous
+الرَّقِيب|Ar-Raqib|The Watchful
+الْمُجِيب|Al-Mujib|The One Who Responds
+الْوَاسِع|Al-Wasi|The All-Encompassing
+الْحَكِيم|Al-Hakim|The All-Wise
+الْوَدُود|Al-Wadud|The Most Loving
+الْمَجِيد|Al-Majid|The Most Glorious
+الْبَاعِث|Al-Ba'ith|The Resurrector
+الشَّهِيد|Ash-Shahid|The Witness
+الْحَقّ|Al-Haqq|The Absolute Truth
+الْوَكِيل|Al-Wakil|The Trustee
+الْقَوِيّ|Al-Qawiyy|The All-Strong
+الْمَتِين|Al-Matin|The Firm and Steadfast
+الْوَلِيّ|Al-Waliyy|The Protecting Friend
+الْحَمِيد|Al-Hamid|The Praiseworthy
+الْمُحْصِي|Al-Muhsi|The All-Enumerator
+الْمُبْدِئ|Al-Mubdi|The Initiator
+الْمُعِيد|Al-Mu'id|The Restorer
+الْمُحْيِي|Al-Muhyi|The Giver of Life
+الْمُمِيت|Al-Mumit|The Bringer of Death
+الْحَيّ|Al-Hayy|The Ever-Living
+الْقَيُّوم|Al-Qayyum|The Self-Subsisting
+الْوَاجِد|Al-Wajid|The One Who Lacks Nothing
+الْمَاجِد|Al-Maajid|The Noble and Glorious
+الْوَاحِد|Al-Wahid|The One
+الْأَحَد|Al-Ahad|The Unique One
+الصَّمَد|As-Samad|The Eternal Refuge
+الْقَادِر|Al-Qadir|The All-Powerful
+الْمُقْتَدِر|Al-Muqtadir|The Omnipotent
+الْمُقَدِّم|Al-Muqaddim|The One Who Brings Forward
+الْمُؤَخِّر|Al-Mu'akhkhir|The One Who Puts Back
+الْأَوَّل|Al-Awwal|The First
+الْآخِر|Al-Akhir|The Last
+الظَّاهِر|Az-Zahir|The Manifest
+الْبَاطِن|Al-Batin|The Hidden
+الْوَالِي|Al-Wali|The Governor
+الْمُتَعَالِي|Al-Muta'ali|The Most Exalted
+الْبَرّ|Al-Barr|The Source of Goodness
+التَّوَّاب|At-Tawwab|The Accepter of Repentance
+الْمُنْتَقِم|Al-Muntaqim|The Just Requiter
+الْعَفُوّ|Al-Afuww|The Pardoner
+الرَّؤُوف|Ar-Ra'uf|The Most Kind
+مَالِكُ الْمُلْك|Malik-ul-Mulk|Master of the Kingdom
+ذُو الْجَلَالِ وَالْإِكْرَام|Dhul-Jalali wal-Ikram|Possessor of Majesty and Honor
+الْمُقْسِط|Al-Muqsit|The Equitable
+الْجَامِع|Al-Jami|The Gatherer
+الْغَنِيّ|Al-Ghaniyy|The Self-Sufficient
+الْمُغْنِي|Al-Mughni|The Enricher
+الْمَانِع|Al-Mani|The Preventer
+الضَّارّ|Ad-Darr|The One Who Can Allow Adversity
+النَّافِع|An-Nafi|The Giver of Benefit
+النُّور|An-Nur|The Light
+الْهَادِي|Al-Hadi|The Guide
+الْبَدِيع|Al-Badi|The Incomparable Originator
+الْبَاقِي|Al-Baqi|The Everlasting
+الْوَارِث|Al-Warith|The Inheritor
+الرَّشِيد|Ar-Rashid|The Guide to the Right Path
+الصَّبُور|As-Sabur|The Most Patient
+`.trim().split("\n").map(line=>line.split("|"));
+
+const grid=document.getElementById("names");
+const search=document.getElementById("search");
+let favorites=new Set();
+try{
+ favorites=new Set(JSON.parse(localStorage.getItem("asmaFavorites")||"[]"));
+}catch(e){}
+let showFavorites=false;
+
+function render(){
+ const q=search.value.trim().toLowerCase();
+ const filtered=data.map((n,i)=>({n,i})).filter(({n,i})=>
+  (!showFavorites||favorites.has(i)) &&
+  (!q||n.join(" ").toLowerCase().includes(q)||String(i+1).includes(q))
+ );
+ document.getElementById("shown").textContent=filtered.length;
+ document.getElementById("favCount").textContent=favorites.size;
+ grid.replaceChildren();
+
+ if(!filtered.length){
+  const empty=document.createElement("div");
+  empty.className="empty";
+  empty.textContent="No names found. Try another search.";
+  grid.appendChild(empty);
+  return;
+ }
+
+ filtered.forEach(({n,i})=>{
+  const card=document.createElement("article");
+  card.className="card";
+
+  const number=document.createElement("div");
+  number.className="number";
+  number.textContent=String(i+1).padStart(2,"0")+" / 99";
+
+  const ar=document.createElement("div");
+  ar.className="arabic";
+  ar.lang="ar";
+  ar.textContent=n[0];
+
+  const tr=document.createElement("div");
+  tr.className="translit";
+  tr.textContent=n[1];
+
+  const meaning=document.createElement("div");
+  meaning.className="meaning";
+  meaning.textContent=n[2];
+
+  const actions=document.createElement("div");
+  actions.className="actions";
+
+  const audio=document.createElement("button");
+  audio.className="btn small";
+  audio.textContent="🔊 Listen";
+  audio.onclick=()=>speak(n[0]);
+
+  const heart=document.createElement("button");
+  heart.className="btn small"+(favorites.has(i)?" active":"");
+  heart.textContent=favorites.has(i)?"♥ Saved":"♡ Favorite";
+  heart.onclick=()=>{
+   if(favorites.has(i))favorites.delete(i);
+   else favorites.add(i);
+   try{
+    localStorage.setItem("asmaFavorites",JSON.stringify([...favorites]));
+   }catch(e){}
+   render();
+  };
+
+  actions.append(audio,heart);
+  card.append(number,ar,tr,meaning,actions);
+  grid.appendChild(card);
+ });
+}
+
+function speak(text){
+ if(!("speechSynthesis" in window)){
+  alert("Speech playback is not supported in this browser.");
+  return;
+ }
+ window.speechSynthesis.cancel();
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang="ar-SA";
+ utterance.rate=0.75;
+ const voices=window.speechSynthesis.getVoices();
+ const voice=voices.find(v=>v.lang.toLowerCase().startsWith("ar"));
+ if(voice)utterance.voice=voice;
+ utterance.onerror=()=>alert("Arabic speech may not be available on your phone.");
+ window.speechSynthesis.speak(utterance);
+}
+
+search.addEventListener("input",render);
+
+document.getElementById("allBtn").onclick=()=>{
+ showFavorites=false;
+ document.getElementById("allBtn").classList.add("active");
+ document.getElementById("favBtn").classList.remove("active");
+ render();
+};
+
+document.getElementById("favBtn").onclick=()=>{
+ showFavorites=true;
+ document.getElementById("favBtn").classList.add("active");
+ document.getElementById("allBtn").classList.remove("active");
+ render();
+};
+
+render();
+</script>
+</body>
+</html>
